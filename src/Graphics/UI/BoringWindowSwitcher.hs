@@ -4,5 +4,7 @@
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 -- 
 module Graphics.UI.BoringWindowSwitcher
-       () where
+       (main) where
 
+main :: IO ()
+main = undfined

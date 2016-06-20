@@ -20,7 +20,8 @@ library
   -- default-extensions:   
   -- other-extensions:     
   exposed-modules:      Graphics.UI.BoringWindowSwitcher
-  -- other-modules:        
+  other-modules:        Graphics.UI.BoringWindowSwitcher.Control,
+                        Graphics.UI.BoringWindowSwitcher.Dialog
   build-depends:        base
 
 executable boring-window-switcher
