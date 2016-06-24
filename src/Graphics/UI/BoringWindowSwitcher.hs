@@ -7,4 +7,4 @@ module Graphics.UI.BoringWindowSwitcher
        (main) where
 
 main :: IO ()
-main = undfined
+main = undefined

@@ -22,7 +22,9 @@ library
   exposed-modules:      Graphics.UI.BoringWindowSwitcher
   other-modules:        Graphics.UI.BoringWindowSwitcher.Control,
                         Graphics.UI.BoringWindowSwitcher.Dialog
-  build-depends:        base
+  build-depends:        base,
+                        X11,
+                        transformers
 
 executable boring-window-switcher
   default-language:     Haskell2010
@@ -32,7 +34,7 @@ executable boring-window-switcher
   -- other-modules:        
   -- default-extensions:   
   -- other-extensions:     
-  build-depends:        base
+  build-depends:        base, boring-window-switcher
 
 test-suite spec
   type:                 exitcode-stdio-1.0
