@@ -9,7 +9,8 @@ module Graphics.UI.BoringWindowSwitcher.Control
          Window, windowName, activeWindows, raiseWindow
        ) where
 
-import Control.Applicative ((<|>))
+import Control.Applicative ((<|>), (<$>))
+import Control.Exception (bracket)
 import Control.Monad.Trans.Maybe (MaybeT(..))
 import Control.Monad.IO.Class (liftIO)
 import qualified Graphics.X11.Xlib as Xlib
@@ -18,7 +19,7 @@ import qualified Graphics.X11.Xlib.Extras as XlibE
 newtype Control = Control { controlDisplay :: Xlib.Display }
 
 withControl :: (Control -> IO a) -> IO a
-withControl = undefined
+withControl = bracket (Control <$> Xlib.openDisplay "") (Xlib.closeDisplay . controlDisplay)
 
 data Window = Window { windowID :: !Xlib.Window
                      } deriving (Show,Eq,Ord)
