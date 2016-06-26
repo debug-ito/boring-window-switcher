@@ -12,7 +12,9 @@ import Control.Monad (void)
 import qualified Graphics.UI.Gtk as Gtk
 import Graphics.UI.Gtk (AttrOp((:=)))
 
-import Graphics.UI.BoringWindowSwitcher.Internal.Control (Window)
+import Graphics.UI.BoringWindowSwitcher.Internal.Control
+  ( Window, windowName
+  )
 
 createDialog :: [Window] -> IO Gtk.Window
 createDialog wins = do
@@ -27,13 +29,16 @@ createWindowList wins = impl where
   impl = do
     model <- Gtk.listStoreNew wins
     view <- Gtk.treeViewNewWithModel model
-    void $ Gtk.treeViewAppendColumn view =<< makeWinNameColumn
+    void $ Gtk.treeViewAppendColumn view =<< makeWinNameColumn model
     return view
-  makeWinNameColumn = do
+  makeWinNameColumn win_model = do
     col <- Gtk.treeViewColumnNew
     Gtk.set col [Gtk.treeViewColumnTitle := "Window Name"]
     renderer <- Gtk.cellRendererTextNew
-    Gtk.treeViewColumnPackStart col renderer False
+    -- see https://wiki.haskell.org/Gtk2Hs/Tutorials/TreeView
+    Gtk.cellLayoutPackStart col renderer False
+    Gtk.cellLayoutSetAttributes col renderer win_model $ \win ->
+      [Gtk.cellText := windowName win]
     return col
   
   
