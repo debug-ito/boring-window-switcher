@@ -20,7 +20,8 @@ main = do
   void $ Gtk.initGUI
   withControl $ \control -> do
     wins <- selectableWindows control
-    dialog <- createDialog wins
+    dialog <- createDialog wins $ \selected_window -> do
+      undefined -- TODO
     void $ Gtk.on dialog Gtk.deleteEvent $ do
       liftIO $ Gtk.mainQuit
       return False
