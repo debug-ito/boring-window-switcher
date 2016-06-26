@@ -8,7 +8,7 @@ module Graphics.UI.BoringWindowSwitcher.Internal.Dialog
        ( createDialog
        ) where
 
-import Control.Monad (void, guard)
+import Control.Monad (void, guard, when)
 import Data.Maybe (listToMaybe)
 import qualified Graphics.UI.Gtk as Gtk
 import Graphics.UI.Gtk (AttrOp((:=)))
@@ -35,6 +35,7 @@ createWindowList wins on_selected = impl where
     void $ Gtk.treeViewAppendColumn view =<< makeWinNameColumn model
     void $ Gtk.on view Gtk.rowActivated $ \path _ ->
       maybe (return ()) on_selected $ getRowItem wins path
+    when (length wins > 0) $ Gtk.treeViewSetCursor view [(min 1 (length wins - 1))] Nothing
     return view
   makeWinNameColumn win_model = do
     col <- Gtk.treeViewColumnNew
