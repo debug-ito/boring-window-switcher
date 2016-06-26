@@ -11,6 +11,7 @@ module Graphics.UI.BoringWindowSwitcher.Internal.Control
 
 import Control.Applicative ((<|>), (<$>))
 import Control.Exception (bracket)
+import Control.Monad (mapM)
 import Control.Monad.Trans.Maybe (MaybeT(..))
 import Control.Monad.IO.Class (liftIO)
 import qualified Graphics.X11.Xlib as Xlib
@@ -21,17 +22,18 @@ newtype Control = Control { controlDisplay :: Xlib.Display }
 withControl :: (Control -> IO a) -> IO a
 withControl = bracket (Control <$> Xlib.openDisplay "") (Xlib.closeDisplay . controlDisplay)
 
-data Window = Window { windowID :: !Xlib.Window
+data Window = Window { windowID :: !Xlib.Window,
+                       windowName :: !String
                      } deriving (Show,Eq,Ord)
 
-windowName :: Window -> String
-windowName = undefined
+toOurWindow :: Xlib.Window -> IO Window
+toOurWindow wid = Window wid <$> xGetWindowName wid
 
-toOurWindow :: Xlib.Window -> Window
-toOurWindow = Window
+xGetWindowName :: Xlib.Window -> IO String
+xGetWindowName = undefined
 
 selectableWindows :: Control -> IO [Window]
-selectableWindows = ((fmap . fmap) toOurWindow) . xSelectableWindows . controlDisplay
+selectableWindows = (mapM toOurWindow =<<) . xSelectableWindows . controlDisplay
 
 -- | c.f. @getWindowList@ function in
 -- https://github.com/debug-ito/numpaar/blob/master/src/window_utils.c
