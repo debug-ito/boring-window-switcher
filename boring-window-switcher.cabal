@@ -24,7 +24,8 @@ library
                         Graphics.UI.BoringWindowSwitcher.Internal.Dialog
   build-depends:        base,
                         X11,
-                        transformers
+                        transformers,
+                        gtk
 
 executable boring-window-switcher
   default-language:     Haskell2010
