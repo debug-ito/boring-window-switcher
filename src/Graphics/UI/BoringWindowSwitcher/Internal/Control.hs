@@ -62,7 +62,8 @@ xSelectableWindows disp = filterM (xIsWindowForPager disp) =<< allWindows
                  <|> winsFor "_WIN_CLIENT_LIST"
     winsFor request = do
       req_atom <- liftIO $ Xlib.internAtom disp request False
-      (fmap . map) fromIntegral $ MaybeT $ XlibE.getWindowProperty32 disp req_atom (Xlib.defaultRootWindow disp)
+      raw_list <- (fmap . map) fromIntegral $ MaybeT $ XlibE.getWindowProperty32 disp req_atom (Xlib.defaultRootWindow disp)
+      return $ reverse raw_list
 
 -- | c.f. @isWindowForPager@ function in
 -- https://github.com/debug-ito/numpaar/blob/master/src/interpreter.c
