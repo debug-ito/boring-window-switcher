@@ -1,10 +1,10 @@
 -- |
--- Module: Graphics.UI.BoringWindowSwitcher.Control
+-- Module: Graphics.UI.BoringWindowSwitcher.Internal.Control
 -- Description: Controls windows.
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 --
--- 
-module Graphics.UI.BoringWindowSwitcher.Control
+-- This is an internal module. End-users should not use this.
+module Graphics.UI.BoringWindowSwitcher.Internal.Control
        ( Control, withControl,
          Window, windowName, selectableWindows, raiseWindow
        ) where

@@ -19,9 +19,9 @@ library
   ghc-options:          -Wall -fno-warn-unused-imports
   -- default-extensions:   
   -- other-extensions:     
-  exposed-modules:      Graphics.UI.BoringWindowSwitcher
-  other-modules:        Graphics.UI.BoringWindowSwitcher.Control,
-                        Graphics.UI.BoringWindowSwitcher.Dialog
+  exposed-modules:      Graphics.UI.BoringWindowSwitcher,
+                        Graphics.UI.BoringWindowSwitcher.Internal.Control,
+                        Graphics.UI.BoringWindowSwitcher.Internal.Dialog
   build-depends:        base,
                         X11,
                         transformers
@@ -50,7 +50,7 @@ test-suite author-spec
     buildable: False
   -- default-extensions:   
   -- other-extensions:     
-  other-modules:        Graphics.UI.BoringWindowSwitcher.ControlSpec
+  other-modules:        Graphics.UI.BoringWindowSwitcher.Internal.ControlSpec
   build-depends:        base, boring-window-switcher,
                         hspec
 

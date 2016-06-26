@@ -1,9 +1,9 @@
-module Graphics.UI.BoringWindowSwitcher.ControlSpec (main,spec) where
+module Graphics.UI.BoringWindowSwitcher.Internal.ControlSpec (main,spec) where
 
 import System.IO (stderr, hPutStrLn)
 import Test.Hspec
 
-import Graphics.UI.BoringWindowSwitcher.Control (withControl, selectableWindows)
+import Graphics.UI.BoringWindowSwitcher.Internal.Control (withControl, selectableWindows)
 
 
 main :: IO ()
