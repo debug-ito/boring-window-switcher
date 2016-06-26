@@ -50,7 +50,7 @@ test-suite author-spec
     buildable: False
   -- default-extensions:   
   -- other-extensions:     
-  other-modules:        Graphics.UI.BoringWindowSwitcherSpec
+  other-modules:        Graphics.UI.BoringWindowSwitcher.ControlSpec
   build-depends:        base, boring-window-switcher,
                         hspec
 

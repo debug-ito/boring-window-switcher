@@ -6,7 +6,7 @@
 -- 
 module Graphics.UI.BoringWindowSwitcher.Control
        ( Control, withControl,
-         Window, windowName, activeWindows, raiseWindow
+         Window, windowName, selectableWindows, raiseWindow
        ) where
 
 import Control.Applicative ((<|>), (<$>))
@@ -30,17 +30,17 @@ windowName = undefined
 toOurWindow :: Xlib.Window -> Window
 toOurWindow = Window
 
-activeWindows :: Control -> IO [Window]
-activeWindows = ((fmap . fmap) toOurWindow) . xActiveWindows . controlDisplay
+selectableWindows :: Control -> IO [Window]
+selectableWindows = ((fmap . fmap) toOurWindow) . xSelectableWindows . controlDisplay
 
 -- | c.f. @getWindowList@ function in
 -- https://github.com/debug-ito/numpaar/blob/master/src/window_utils.c
 -- , which is based on the source code of wmctrl and libxdo-2.
-xActiveWindows :: Xlib.Display -> IO [Xlib.Window]
-xActiveWindows disp = nothingToExcept
-                      $ wins "_NET_CLIENT_LIST_STACKING"
-                      <|> wins "_NET_CLIENT_LIST"
-                      <|> wins "_WIN_CLIENT_LIST"
+xSelectableWindows :: Xlib.Display -> IO [Xlib.Window]
+xSelectableWindows disp = nothingToExcept
+                          $ wins "_NET_CLIENT_LIST_STACKING"
+                          <|> wins "_NET_CLIENT_LIST"
+                          <|> wins "_WIN_CLIENT_LIST"
   where
     wins request = do
       req_atom <- liftIO $ Xlib.internAtom disp request False
