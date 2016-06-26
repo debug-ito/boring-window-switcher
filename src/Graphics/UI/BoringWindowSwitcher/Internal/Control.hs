@@ -11,7 +11,7 @@ module Graphics.UI.BoringWindowSwitcher.Internal.Control
 
 import Control.Applicative ((<|>), (<$>))
 import Control.Exception (bracket)
-import Control.Monad (mapM, guard)
+import Control.Monad (mapM, guard, filterM)
 import Control.Monad.Trans.Maybe (MaybeT(..))
 import Control.Monad.IO.Class (liftIO)
 import Data.Maybe (listToMaybe)
@@ -30,11 +30,13 @@ data Window = Window { windowID :: !Xlib.Window,
 toOurWindow :: Xlib.Display -> Xlib.Window -> IO Window
 toOurWindow disp wid = Window wid <$> xGetWindowName disp wid
 
+withDefaultOf :: Functor m => a -> MaybeT m a -> m a
+withDefaultOf def_value = (fmap $ maybe def_value id) . runMaybeT
+
 -- | c.f. @xdo_get_window_name@ function in libxdo-2.
 xGetWindowName :: Xlib.Display -> Xlib.Window -> IO String
-xGetWindowName disp win = otherwiseEmpty $ propAt "_NET_WM_NAME" <|> propAt "WM_NAME"
+xGetWindowName disp win = withDefaultOf "" $ propAt "_NET_WM_NAME" <|> propAt "WM_NAME"
   where
-    otherwiseEmpty = (fmap $ maybe "" id) . runMaybeT
     propAt prop_name_str = do
       prop_name_atom <- liftIO $ Xlib.internAtom disp prop_name_str False
       tprop <- liftIO $ XlibE.getTextProperty disp win prop_name_atom
@@ -52,14 +54,29 @@ nothingToExcept error_message m = maybe (fail error_message) return =<< runMaybe
 -- https://github.com/debug-ito/numpaar/blob/master/src/window_utils.c
 -- , which is based on the source code of wmctrl and libxdo-2.
 xSelectableWindows :: Xlib.Display -> IO [Xlib.Window]
-xSelectableWindows disp = nothingToExcept "Cannot obtain X client list."
-                          $ wins "_NET_CLIENT_LIST_STACKING"
-                          <|> wins "_NET_CLIENT_LIST"
-                          <|> wins "_WIN_CLIENT_LIST"
+xSelectableWindows disp = filterM (xIsWindowForPager disp) =<< allWindows
   where
-    wins request = do
+    allWindows = nothingToExcept "Cannot obtain X client list."
+                 $ winsFor "_NET_CLIENT_LIST_STACKING"
+                 <|> winsFor "_NET_CLIENT_LIST"
+                 <|> winsFor "_WIN_CLIENT_LIST"
+    winsFor request = do
       req_atom <- liftIO $ Xlib.internAtom disp request False
       (fmap . map) fromIntegral $ MaybeT $ XlibE.getWindowProperty32 disp req_atom (Xlib.defaultRootWindow disp)
+
+-- | c.f. @isWindowForPager@ function in
+-- https://github.com/debug-ito/numpaar/blob/master/src/interpreter.c
+xIsWindowForPager :: Xlib.Display -> Xlib.Window -> IO Bool
+xIsWindowForPager disp win = impl where
+  impl = do
+    state_req <- Xlib.internAtom disp "_NET_WM_STATE" False
+    mret <- XlibE.getWindowProperty32 disp state_req win
+    case mret of
+      Nothing -> return True
+      Just raw_atoms -> do
+        let state_atoms = map fromIntegral raw_atoms
+        skip_atom <- Xlib.internAtom disp "_NET_WM_STATE_SKIP_PAGER" False
+        return $ not $ skip_atom `elem` state_atoms
 
 raiseWindow :: Control -> Window -> IO ()
 raiseWindow = undefined
