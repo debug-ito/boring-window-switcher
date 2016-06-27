@@ -5,13 +5,13 @@ maintainer:             Toshio Ito <debug.ito@gmail.com>
 license:                BSD3
 license-file:           LICENSE
 synopsis:               A boring window switcher.
-description:            A boring window switcher.
+description:            A boring window switcher. See README.md
 category:               Graphics
 cabal-version:          >= 1.10
 build-type:             Simple
 extra-source-files:     README.md, ChangeLog.md
--- homepage:               
--- bug-reports:            
+homepage:               https://github.com/debug-ito/boring-window-switcher
+bug-reports:            https://github.com/debug-ito/boring-window-switcher/issues
 
 library
   default-language:     Haskell2010
@@ -57,4 +57,4 @@ test-suite author-spec
 
 source-repository head
   type:                 git
---  location:             
+  location:             https://github.com/debug-ito/boring-window-switcher.git
