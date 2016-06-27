@@ -30,6 +30,7 @@ createWindowList wins on_selected = impl where
   impl = do
     model <- Gtk.listStoreNew wins
     view <- Gtk.treeViewNewWithModel model
+    Gtk.treeViewSetHeadersVisible view False
     void $ Gtk.treeViewAppendColumn view =<< makeWinNameColumn model
     void $ Gtk.on view Gtk.rowActivated $ \path _ ->
       maybe (return ()) on_selected $ getRowItem wins path
