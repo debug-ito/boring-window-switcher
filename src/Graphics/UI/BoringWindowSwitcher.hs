@@ -1,6 +1,6 @@
 -- |
 -- Module: Graphics.UI.BoringWindowSwitcher
--- Description:
+-- Description: main module behind boring-window-switcher
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 -- 
 module Graphics.UI.BoringWindowSwitcher
@@ -15,6 +15,7 @@ import Graphics.UI.BoringWindowSwitcher.Internal.Dialog (createDialog)
 
 import qualified Graphics.UI.Gtk as Gtk
 
+-- | Entry point of @boring-window-switcher@ executable.
 main :: IO ()
 main = do
   void $ Gtk.initGUI

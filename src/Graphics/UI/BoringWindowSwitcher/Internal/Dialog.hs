@@ -17,7 +17,9 @@ import Graphics.UI.BoringWindowSwitcher.Internal.Control
   ( Window, windowName
   )
 
-createDialog :: [Window] -> (Window -> IO ()) -> IO Gtk.Window
+createDialog :: [Window] -- ^ the list of windows to show.
+             -> (Window -> IO ()) -- ^ callback on the selected window.
+             -> IO Gtk.Window
 createDialog wins on_selected = do
   dialog_window <- Gtk.windowNew
   Gtk.set dialog_window [Gtk.windowTitle := "Boring Window Switcher"]
