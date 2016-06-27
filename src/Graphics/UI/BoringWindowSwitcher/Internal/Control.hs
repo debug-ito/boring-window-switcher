@@ -80,5 +80,9 @@ xIsWindowForPager disp win = impl where
         return $ not $ skip_atom `elem` state_atoms
 
 raiseWindow :: Control -> Window -> IO ()
-raiseWindow cont win = Xlib.raiseWindow (controlDisplay cont) (windowID win)
+raiseWindow cont win = do
+  Xlib.raiseWindow disp wid
+  where
+    disp = controlDisplay cont
+    wid = windowID win
 

@@ -21,9 +21,7 @@ createDialog :: [Window] -> (Window -> IO ()) -> IO Gtk.Window
 createDialog wins on_selected = do
   dialog_window <- Gtk.windowNew
   Gtk.set dialog_window [Gtk.windowTitle := "Boring Window Switcher"]
-  wlist <- createWindowList wins $ \selected_window -> do
-    on_selected selected_window
-    Gtk.widgetDestroy dialog_window
+  wlist <- createWindowList wins on_selected
   Gtk.containerAdd dialog_window wlist
   return dialog_window
 
