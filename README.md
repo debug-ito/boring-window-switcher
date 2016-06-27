@@ -11,6 +11,9 @@ Unlike many other window switchers, this is NOT a daemon. This is just a regular
 
 TBW. (It's a Haskell program installable by `cabal`).
 
+## How to Run
+
+ $ boring-window-switcher
 
 ## See Also
 
