@@ -1,5 +1,7 @@
 # boring-window-switcher
 
+![screen shot](https://raw.githubusercontent.com/debug-ito/boring-window-switcher/master/resource/screenshot.png)
+
 A boring window switcher for X11 desktop environments.
 
 Unlike many other window switchers, this is NOT a daemon. This is just a regular Gtk+ application that shows windows currently open, and raises the window the user selects. It does not do any tricky keyboard grabbing.
