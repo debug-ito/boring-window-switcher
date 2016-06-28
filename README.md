@@ -9,11 +9,23 @@ Unlike many other window switchers, this is NOT a daemon. This is just a regular
 
 ## How to Install
 
-TBW. (It's a Haskell program installable by `cabal`).
+To build this program, you need development files of GTK+ and Xlib. On Ubuntu, you can install them by
+
+    $ sudo apt-get install libgtk2.0-dev libx11-dev
+
+Then the easiest way to install this program is to use git and [stack](http://docs.haskellstack.org/en/stable/README/). Just clone this repository, build the source and install.
+
+    $ git clone https://github.com/debug-ito/boring-window-switcher.git
+    $ cd boring-window-switcher
+    $ stack --install-ghc install
+
+Building `gtk` takes long time. Be patient.
+
+Alternatively, you can install this program directly from hackage: http://hackage.haskell.org/package/boring-window-switcher
 
 ## How to Run
 
- $ boring-window-switcher
+    $ boring-window-switcher
 
 ## See Also
 
