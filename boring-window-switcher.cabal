@@ -53,7 +53,7 @@ test-suite author-spec
   -- other-extensions:     
   other-modules:        Graphics.UI.BoringWindowSwitcher.Internal.ControlSpec
   build-depends:        base, boring-window-switcher,
-                        hspec >=2.1.7 && <2.3
+                        hspec >=2.1.7 && <2.4
 
 source-repository head
   type:                 git
