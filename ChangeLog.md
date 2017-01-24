@@ -1,5 +1,10 @@
 # Revision history for boring-window-switcher
 
+## 0.1.0.3  -- 2017-01-24
+
+* Confirmed test with `hspec-2.4.0`.
+
+
 ## 0.1.0.2  -- 2016-12-24
 
 * Confirmed test with `X11-1.7`.
