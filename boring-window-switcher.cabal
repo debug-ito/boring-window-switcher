@@ -23,7 +23,7 @@ library
                         Graphics.UI.BoringWindowSwitcher.Internal.Control,
                         Graphics.UI.BoringWindowSwitcher.Internal.Dialog
   build-depends:        base >=4.7.0 && <5.0,
-                        X11 >=1.6.1 && <1.8,
+                        X11 >=1.6.1 && <1.9,
                         transformers >=0.3.0 && <0.6,
                         gtk >=0.13.9 && <0.15
 
