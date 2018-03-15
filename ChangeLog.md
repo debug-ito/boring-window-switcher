@@ -1,5 +1,11 @@
 # Revision history for boring-window-switcher
 
+## 0.1.0.5  -- 2018-03-15
+
+* Remove dependency upper bound for `hspec`,
+  because I think it's stable enough.
+
+
 ## 0.1.0.4  -- 2017-02-10
 
 * Confirmed test with `X11-1.8`.

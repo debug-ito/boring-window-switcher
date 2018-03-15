@@ -1,5 +1,5 @@
 name:                   boring-window-switcher
-version:                0.1.0.4
+version:                0.1.0.5
 author:                 Toshio Ito <debug.ito@gmail.com>
 maintainer:             Toshio Ito <debug.ito@gmail.com>
 license:                BSD3
@@ -53,7 +53,7 @@ test-suite author-spec
   -- other-extensions:     
   other-modules:        Graphics.UI.BoringWindowSwitcher.Internal.ControlSpec
   build-depends:        base, boring-window-switcher,
-                        hspec >=2.1.7 && <2.5
+                        hspec >=2.1.7
 
 source-repository head
   type:                 git
